@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/scrollView">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Shelf 1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_marginRight="5dp"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="Add"
+                android:id="@+id/btnAddInApp"
+                android:background="@drawable/button_theme" />
+
+        </LinearLayout>
+
+        <org.lucasr.twowayview.TwoWayView
+            android:id="@+id/twvInAppLibOne"
+            style="@style/TwoWayView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false" />
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Shelf 2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_marginRight="5dp"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:text="Add"
+                android:id="@+id/btnAddInAppTwo"
+                android:background="@drawable/button_theme" />
+
+        </LinearLayout>
+
+        <org.lucasr.twowayview.TwoWayView
+            android:id="@+id/twvInAppLibTwo"
+            style="@style/TwoWayView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawSelectorOnTop="false" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,18 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter.InAppReadingActivity">
+
+    <item
+        android:id="@+id/item_title"
+        android:title="@string/page_number"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/item_page_nr"
+        android:title="@string/page_number"
+        app:showAsAction="ifRoom">
+    </item>
+
+</menu>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/item_background"
+    android:padding="2dp" >
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:padding="2dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher" />
+    <TextView
+        android:id="@+id/tvBookTitle"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivIcon"
+        android:layout_alignTop="@+id/ivIcon"
+        android:layout_alignRight="@+id/ivIcon"
+        android:layout_alignBottom="@+id/ivIcon"
+        android:layout_margin="15dp"
+        android:text="Hello"
+        android:textColor="#000000" />
+
+</RelativeLayout>

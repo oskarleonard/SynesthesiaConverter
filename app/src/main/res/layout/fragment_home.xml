@@ -1,0 +1,85 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter.HomeFragment"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/scrollView3">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Last Read"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/item_background"
+            android:padding="2dp"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibLastRead"
+                android:src="@drawable/ic_picture_file"
+                />
+
+            <TextView
+                android:id="@+id/tvHomeBookTitle"
+                android:textSize="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/ivIcon"
+                android:layout_alignTop="@+id/ivIcon"
+                android:layout_alignRight="@+id/ivIcon"
+                android:layout_alignBottom="@+id/ivIcon"
+                android:layout_margin="15dp"
+                android:text=""
+                android:textColor="#000000" />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:layout_margin="5dp"
+                android:background="@drawable/button_theme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Forum"
+                android:id="@+id/btnForum"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_margin="5dp"
+                android:background="@drawable/button_theme"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="My Converter"
+                android:id="@+id/btnMyConverter"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>
+
+
