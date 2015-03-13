@@ -1,4 +1,4 @@
-PDFcoloring
+Synesthesia Tool
 ===========
 This is an opensource project. The goal of this project is to create an app that will support your synesthesia training program.
 
