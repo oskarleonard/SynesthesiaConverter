@@ -59,7 +59,7 @@ public class GameFiveTwoView extends View {
         paint = new Paint();
 
         paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(8);
+        paint.setStrokeWidth(getResources().getDisplayMetrics().density*2);
 
 
         List<CanvasFigure> figures = createFigures(50);
@@ -109,7 +109,7 @@ public class GameFiveTwoView extends View {
         List<CanvasFigure> figures = new ArrayList<CanvasFigure>();
 
         for (int x = 0; x < numbers; x++) {
-            figures.add(new CanvasFigure(figType.get(x), figSizeY, figSizeX, squareSizeX/2, squareSizeY/2));
+            figures.add(new CanvasFigure(paint.getStrokeWidth(), figType.get(x), figSizeY, figSizeX, squareSizeX/2, squareSizeY/2));
         }
 //40,40,50,115
         return figures;

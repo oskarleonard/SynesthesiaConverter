@@ -155,6 +155,8 @@ public class HtmlFragment extends Fragment implements HtmlAddDialog.ConverterDia
                                 BookShelf.saveBookShelfToSharedPref(getActivity(), shelf, sharedPrefKey);
                                 upDateTwoWayView();
                                 break;
+                            case 2:
+                                //Edit Name
                         }
                     }
                 });

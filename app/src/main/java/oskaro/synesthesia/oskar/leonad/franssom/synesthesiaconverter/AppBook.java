@@ -92,12 +92,11 @@ public class AppBook implements Parcelable{
                 lineBreakString += titleChar[x];
                 j++;
             }else{
-                lineBreakString += "\n";
+                lineBreakString += "\n  ";
                 lineBreakString += titleChar[x];
-                lineBreakString.trim();
                 j=0;
             }
-            if(x>35)
+            if(x>40)
                 break;
         }
         this.title = lineBreakString;
@@ -107,7 +106,7 @@ public class AppBook implements Parcelable{
     public void setCover(String cover) {
         //Assign Default Cover if its empty
         if(cover == null){
-            this.cover = "file:///android_asset/books/frame_original_haze.jpg";
+            this.cover = "file:///android_asset/books/frame_open_white.jpg";
         }else{
             this.cover = cover;
         }

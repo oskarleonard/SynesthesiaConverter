@@ -1,6 +1,7 @@
 package oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,16 @@ public class FileExplorerAdapter extends BaseAdapter {
         } else if (currentFile.getName().toLowerCase().endsWith(extension)) {
             //If picture file, than show a thumbnail of it, else show that its OK
             if(currentFile.getName().toLowerCase().endsWith(".jpg")){
-                Picasso.with(inflater.getContext()).load(currentFile.toURI().toString()).resize(250, 250).into(ivFileIcon);
+
+                //If cover from assets or not
+                if(currentFile.getPath().contains("file:/")){
+                    String[] thePath = currentFile.getPath().split("file:/");
+                    Picasso.with(inflater.getContext()).load("file:///"+thePath[1]).resize(250, 250).into(ivFileIcon);
+                }else{
+                    //Picasso helps here in case the jpg files is too big. Picasso takes care of memory management.
+                    Picasso.with(inflater.getContext()).load(currentFile.toURI().toString()).resize(250, 250).into(ivFileIcon);
+                }
+
             }else{
                 ivFileIcon.setImageResource(R.drawable.ic_file_ok);
             }

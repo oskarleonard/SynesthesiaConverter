@@ -14,7 +14,8 @@
             android:src="@drawable/ic_picture_dir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/ivFileIcon" />
+            android:id="@+id/ivFileIcon"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:padding="10dp"

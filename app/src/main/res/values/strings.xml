@@ -10,5 +10,9 @@
     <string name="action_sync">Sync Storage</string>
 
     <string name="page_number">1</string>
+    <string name="book_mark">Last Read</string>
+    <string name="last_zoom">Last Zoom</string>
+
+
 
 </resources>

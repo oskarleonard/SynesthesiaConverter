@@ -3,6 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter.InAppReadingActivity">
 
+
+
+    <item
+        android:id="@+id/zoomIn"
+        android:title="@string/page_number"
+        android:icon="@drawable/ic_zoom_in"
+        app:showAsAction="always">
+    </item>
+    <item
+        android:id="@+id/zoomOut"
+        android:title="@string/page_number"
+        android:icon="@drawable/ic_zoom_out"
+        app:showAsAction="always">
+    </item>
+
+    <item
+        android:id="@+id/item_page_nr"
+        android:title="@string/page_number"
+        app:showAsAction="always">
+    </item>
+
     <item
         android:id="@+id/item_title"
         android:title="@string/page_number"
@@ -10,8 +31,8 @@
     </item>
 
     <item
-        android:id="@+id/item_page_nr"
-        android:title="@string/page_number"
+        android:id="@+id/item_bookmark"
+        android:title="@string/book_mark"
         app:showAsAction="ifRoom">
     </item>
 

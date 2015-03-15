@@ -30,7 +30,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/ibEpubCover"
-            android:src="@drawable/frame_original_haze" />
+            android:src="@drawable/frame_open_white"
+             />
 
     </LinearLayout>
 

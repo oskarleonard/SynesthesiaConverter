@@ -13,13 +13,15 @@ public class CanvasFigure {
     private int offSetMax;
     private int sizeY;
     private int sizeX;
+    private float strokeWidth;
 
-    public CanvasFigure(int type, int sizeY, int sizeX, int offSetX, int offSetY) {
+    public CanvasFigure(float strokeWidth, int type, int sizeY, int sizeX, int offSetX, int offSetY) {
         if(setType(type)){
             this.offSetMin = offSetX;
             this.offSetMax = offSetY;
             this.sizeY = sizeY;
             this.sizeX = sizeX;
+            this.strokeWidth = strokeWidth;
         }else{
             throw new IllegalArgumentException();
         }
@@ -42,15 +44,19 @@ public class CanvasFigure {
         x += randomOffSetX;
         y += randomOffSetY;
 
+        float deleteCrocodileGap = strokeWidth/2;
+
         float stopX = x + sizeX;
         float stopY = y + sizeY;
 
+
+
         float[] aTwo = new float[]{
-                x, y, stopX, y,
-                x, stopY + sizeY, x, stopY,
-                x, stopY, stopX, stopY,
-                stopX, stopY, stopX, y,
-                stopX, stopY + sizeY, stopX - sizeX, stopY + sizeY
+                x-deleteCrocodileGap, y, stopX+deleteCrocodileGap, y, //x1
+                x, stopY + sizeY, x, stopY, //y2
+                x-deleteCrocodileGap, stopY, stopX+deleteCrocodileGap, stopY, //x2
+                stopX, stopY, stopX, y, //y1
+                stopX+deleteCrocodileGap, stopY + sizeY, stopX - sizeX-deleteCrocodileGap, stopY + sizeY //x3
         };
         return aTwo;
     }
@@ -62,15 +68,17 @@ public class CanvasFigure {
         x += randomOffSetX;
         y += randomOffSetY;
 
+        float deleteCrocodileGap = strokeWidth/2;
+
         float stopX = x + sizeX;
         float stopY = y + sizeY;
 
         float[] aFive = new float[]{
-                x, y, stopX, y,
+                x-deleteCrocodileGap, y, stopX+deleteCrocodileGap, y,
                 x, y, x, stopY,
-                x, stopY, stopX, stopY,
+                x-deleteCrocodileGap, stopY, stopX+deleteCrocodileGap, stopY,
                 stopX, stopY, stopX, stopY + sizeY,
-                stopX, stopY + sizeY, stopX - sizeX, stopY + sizeY
+                stopX+deleteCrocodileGap, stopY + sizeY, stopX - sizeX-deleteCrocodileGap, stopY + sizeY
         };
 
         return aFive;

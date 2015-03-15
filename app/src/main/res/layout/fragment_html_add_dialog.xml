@@ -1,12 +1,12 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="com.franssonleonard.oskar.pdfcoloring.EpubConverter$PlaceholderFragment">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
         android:padding="5dp">
@@ -16,7 +16,7 @@
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="See ⋮ for instructions "
+            android:text="See play store for instructions "
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <LinearLayout
@@ -33,19 +33,36 @@
             android:hint="Title And/Or Cover -->"/>
 
         <ImageButton
-            android:layout_width="60dp"
+            android:layout_width="65dp"
             android:layout_height="60dp"
             android:id="@+id/ibCover"
             android:layout_gravity="end"
-            android:src="@drawable/frame_original_haze" />
+            android:src="@drawable/frame_open_white"
+             />
 
     </LinearLayout>
 
-        <EditText
-            android:id="@+id/etURL"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:hint="Paste URL here" />
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/etURL"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="Paste URL here"
+                android:layout_weight="1" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ran"
+                android:id="@+id/btnRan"
+                android:layout_weight="3" />
+
+        </LinearLayout>
+
+
 
         <Button
             android:layout_width="match_parent"

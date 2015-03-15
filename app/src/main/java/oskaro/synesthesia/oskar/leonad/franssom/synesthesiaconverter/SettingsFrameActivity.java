@@ -40,9 +40,9 @@ public class SettingsFrameActivity extends ActionBarActivity {
                 is why i added the spinner on a seperate row*/
         navSpinner.add("Josh     ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         navSpinner.add("Magneta ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        navSpinner.add("Oskar    ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        navSpinner.add("Oskar ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         navSpinner.add("RainBow ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        navSpinner.add("Rain     ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        navSpinner.add("Rain  ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         //navSpinner.add("This is a preview of the schema, most common among synesthetic people ");
 
         SharedPreferences settings = this.getSharedPreferences(SP_SETTINGS, 0);

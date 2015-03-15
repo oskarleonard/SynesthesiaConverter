@@ -1,6 +1,7 @@
 package oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter;
 
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -38,6 +40,7 @@ public class InAppReadingFragment extends Fragment {
     private GestureDetector gd;
     private int bookSize;
     private AppBook appBook;
+    private int zoom = 0;
 
     public static InAppReadingFragment newInstance(AppBook appBook){
         InAppReadingFragment inAppReadingFragment = new InAppReadingFragment();
@@ -58,18 +61,38 @@ public class InAppReadingFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id){
+            case R.id.zoomIn:
+                zoom+=30;
+                inAppWebView.setInitialScale(zoom);
+                return true;
+            case R.id.zoomOut:
+                zoom-=30;
+                inAppWebView.setInitialScale(zoom);
+                return true;
+            case R.id.item_bookmark:
+                inAppWebView.scrollTo(0, getActivity().getSharedPreferences(MainActivity.SP_ACTIVITY, 0).getInt(appBook.getPath(),0));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("Blank", "onDestroy");
-        inAppWebView.setWebViewClient(null);
+        inAppWebView.stopLoading();
         inAppWebView.destroy();
+
+        SharedPreferences sp = getActivity().getSharedPreferences(MainActivity.SP_ACTIVITY, 0);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(appBook.getPath(), inAppWebView.getScrollY());
+
+        Log.i("onDestroy", "onDestroy zoom " + zoom);
+
+        editor.putInt("ZOOM", zoom);
+        editor.apply();
     }
 
     @Override
@@ -79,7 +102,6 @@ public class InAppReadingFragment extends Fragment {
 
         //disable Screen rotation during reading mode
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        Log.i("Blank", "onCreateView");
 
         //Get the support actionbar from this fragments activity than hide it
         actionBar = ((ActionBarActivity) this.getActivity()).getSupportActionBar();
@@ -89,7 +111,6 @@ public class InAppReadingFragment extends Fragment {
 
         //Get the book file of the AppBook object
         appBook = getArguments().getParcelable("Book");
-        Log.i("Blank", appBook.getCover());
         File htmlBook = new File(Environment.getExternalStorageDirectory(), appBook.getPath());
 
         setUpGestureDetector();
@@ -101,9 +122,16 @@ public class InAppReadingFragment extends Fragment {
 
     private void setUpWebView(File htmlBook) {
 
+
         inAppWebView = (WebView)theView.findViewById(R.id.inAppWebView);
-        inAppWebView.setInitialScale(500);
-        Log.i("INAPDDD", "Scale " + inAppWebView.getScale());
+
+        zoom = getActivity().
+                getSharedPreferences(MainActivity.SP_ACTIVITY, 0).getInt("ZOOM", 100 * (int)inAppWebView.getScale());
+
+        //Set users preferable zoom.
+        inAppWebView.setInitialScale(zoom);
+
+
         inAppWebView.loadUrl(htmlBook.toURI().toString());
         inAppWebView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -194,11 +222,8 @@ public class InAppReadingFragment extends Fragment {
             public void onClick(View v) {
                 //Scroll Whole Page
                 //inAppWebView.pageDown(false);
-
                 inAppWebView.scrollBy(0, (int)Math.round(inAppWebView.getMeasuredHeight()/1.02)); //Same as pageDown(false), but no animated scroll
                 updatePageNumber();
-
-                Log.i("STIRRE", "Scroll = " + inAppWebView.getScrollY());
             }
         });
 

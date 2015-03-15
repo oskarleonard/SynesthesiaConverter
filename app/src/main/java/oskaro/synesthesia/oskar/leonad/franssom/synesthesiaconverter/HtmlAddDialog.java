@@ -3,9 +3,11 @@ package oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +22,15 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -33,7 +39,8 @@ import java.util.List;
  */
 public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.FileDialogFragmentListener {
 
-    private Button btnPreviewHtml, btnConvert, btnCreateHtml;
+    public static final int DIALOG_COVER_SIZE = 230;
+    private Button btnPreviewHtml, btnConvert, btnCreateHtml, btnRan;
     private ImageButton ibCover;
     private WebView preViewHtml;
     private View theView;
@@ -86,7 +93,7 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
         progBarHtml = (ProgressBar) theView.findViewById(R.id.progBarHtml);
 
         etURL = (EditText) theView.findViewById(R.id.etURL);
-        etURL.setText("http://www.gutenberg.org/files/24013/24013-h/24013-h.htm");
+        etURL.setText("");
         etBookTitle = (EditText) theView.findViewById(R.id.etSaveBookTitle);
         setUpButtons();
         setUpWebView();
@@ -100,39 +107,86 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
     }
 
     private void createAppBookObject() {
-        String title = etBookTitle.getText().toString();
+        String title = "\n " + etBookTitle.getText().toString();
         appBook = new AppBook(title, bookType, coverPath);
+    }
+
+    private String[] splitString(String str, int elements) {
+        elements++;
+        String[] splitStrings = new String[elements];
+        int currentLength = 0;
+        int oneFourth = str.length() / elements;
+
+
+        for (int x = 1; x <= elements; x++) {
+
+            //for the last text chunk add "remainders" which were rounded down when (int)
+            if (x == splitStrings.length) {
+                //Log.i("THEADD DIALOGER   " , "splitStrings[x-1] = " + splitStrings[x-1].length());
+
+                splitStrings[x-1] = str.substring(currentLength, str.length());
+
+                //Log.i("THEADD----DIALOGERRR " , "oneFourth = " + splitStrings[x-1].length());
+
+            } else {
+                splitStrings[x-1] = str.substring(currentLength, oneFourth*x);
+            }
+            currentLength += oneFourth;
+        }
+        return splitStrings;
     }
 
     private boolean createHtmlFile() {
         boolean toReturn = false;
         File dir = Environment.getExternalStorageDirectory();
-        FileOutputStream fos = null;
+
+        // Do this : https://developer.android.com/training/run-background-service/index.html
+        //https://androidresearch.wordpress.com/2012/03/17/understanding-asynctask-once-and-forever/
+        //divide the string by 4 and read it in chunks, each chunk consists of 650 000 elements. Otherwise
+        // getBytes(Charset.forName("UTF-16") can cause out.of.memory if string is too big.
+        //Important, i have to call this outside the try{} otherwise it will only do 3 loops inside splitString()?????
+        String[] bookPieces = splitString(htmlContent, Math.round(htmlContent.length()/650000));
+
+        OutputStream outputStream = null;
+        InputStream inputStream = null;
         try {
-            //File file = new File(dir,appBook.getPath());
-            fos = new FileOutputStream(new File(dir, appBook.getPath()));
-            // If file does not exists, then create it
+            outputStream = new FileOutputStream(new File(dir, appBook.getPath()));
+            for (String text : bookPieces) {
+                byte[] theBytes = text.getBytes(Charset.forName("UTF-16"));
+                inputStream = new ByteArrayInputStream(theBytes);
+                byte[] bufferData = new byte[1024];
+                int bytesRead = inputStream.read(bufferData);
 
-            //If charset is not set than '-' will be displayed as â€
-            byte[] contentBytes = htmlContent.getBytes(Charset.forName("UTF-16"));
+                while (bytesRead != -1) {
+                    outputStream.write(bufferData, 0, bytesRead); //add the bufferData data to the "new file"
+                    bytesRead = inputStream.read(bufferData); // keep on reading and filling the dynamic byte araay until it returns -1
+                }
+                //need to GC the inputsteam myself!!!!
+                inputStream = null;
 
-            fos.write(contentBytes);
-            fos.flush();
-            fos.close();
+            }
             toReturn = true;
 
         } catch (Exception e) {
 
         } finally {
-            try {
-                if (fos != null) {
-                    fos.close();
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }
+            if (outputStream != null) {
+                try {
+                    // outputStream.flush();
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
-
         return toReturn;
     }
 
@@ -147,11 +201,16 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
     private void setUpButtons() {
 
         ibCover = (ImageButton) theView.findViewById(R.id.ibCover);
+        Picasso.with(getActivity()).load("file:///android_asset/books/frame_open_white.jpg").resize(DIALOG_COVER_SIZE, DIALOG_COVER_SIZE).into(ibCover);
         ibCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //Open a File Explorer that shows avaiable jpg files.
-                String[] paths = new String[]{"download", MainActivity.SYNESTHESIA + "/" + MainActivity.COVER};
+                String[] paths = new String[]{"download",
+                        "file:///android_asset/books/frame_open_old.jpg",
+                        "file:///android_asset/books/frame_open_white.jpg",
+                        "file:///android_asset/books/frame_original_haze.jpg",
+                        "file:///android_asset/books/frame_wood_gold.jpg"};
                 DialogFragment converterDialog = FileDialogFragment.newInstance(".jpg", paths);
                 converterDialog.setTargetFragment(HtmlAddDialog.this, 0);
                 converterDialog.show(getFragmentManager().beginTransaction(), "DIAL");
@@ -159,7 +218,7 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
         });
 
 
-        btnConvert = (Button)theView.findViewById(R.id.btnConvert);
+        btnConvert = (Button) theView.findViewById(R.id.btnConvert);
         btnConvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,6 +252,18 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
                 }
             }
         });
+
+        btnRan = (Button)theView.findViewById(R.id.btnRan);
+        btnRan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String [] books = new String[]
+                        {"http://www.gutenberg.org/files/16449/16449-h/16449-h.htm",
+                        "http://www.gutenberg.org/files/48486/48486-h/48486-h.htm",
+                        "https://www.gutenberg.org/files/22336/22336-h/22336-h.htm"};
+                etURL.setText(books[new Random().nextInt(books.length)]);
+            }
+        });
     }
 
     @Override
@@ -205,13 +276,24 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
     //Returns the selected cover for a book.
     @Override
     public void onFinishFileDialogFragment(File selectedFile, int reqCode) {
-        File dir = Environment.getExternalStorageDirectory();
-        // Move File (.jpg) from download to Cover folder.
-        File newFile = new File(dir, MainActivity.SYNESTHESIA + "/" + MainActivity.COVER + "/" + selectedFile.getName());
-        selectedFile.renameTo(newFile);
-        coverPath = newFile.toURI().toString();
-        //Change to size is always fixed
-        Picasso.with(getActivity().getBaseContext()).load(coverPath).resize(200, 200).into(ibCover);
+
+        //If cover from assets or not
+        if(selectedFile.getPath().contains("file:/")){
+            String[] thePath = selectedFile.getPath().split("file:/");
+            coverPath = "file:///"+thePath[1];
+            Picasso.with(getActivity()).load("file:///"+thePath[1]).resize(DIALOG_COVER_SIZE, DIALOG_COVER_SIZE).into(ibCover);
+        }else{
+            File dir = Environment.getExternalStorageDirectory();
+            // Move File (.jpg) from download to Cover folder.
+            File newFile = new File(dir, MainActivity.SYNESTHESIA + "/" + MainActivity.COVER + "/" + selectedFile.getName());
+            selectedFile.renameTo(newFile);
+            coverPath = newFile.toURI().toString();
+            //Change to size is always fixed
+            Picasso.with(getActivity().getBaseContext()).load(coverPath).resize(DIALOG_COVER_SIZE, DIALOG_COVER_SIZE).into(ibCover);
+        }
+
+
+
     }
 
 
@@ -227,7 +309,7 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
         }
 
         @JavascriptInterface
-        public void initScript(int progressBar){
+        public void initScript(int progressBar) {
             progBarHtml.setMax(progressBar);
         }
 
@@ -264,9 +346,9 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
     }
 
     //A method which perform a script on a webview.
-    private String converterScript(){
+    private String converterScript() {
         //Get the chosen colorschema from the settingsActivity
-        int colorSchema = getActivity().getSharedPreferences(SettingsFrameActivity.SP_SETTINGS, 0).getInt(SettingsFrameActivity.SP_SETTINGS_CHOSEN_SCHEMA,0);
+        int colorSchema = getActivity().getSharedPreferences(SettingsFrameActivity.SP_SETTINGS, 0).getInt(SettingsFrameActivity.SP_SETTINGS_CHOSEN_SCHEMA, 0);
         ColorizeSchemeClassObject cSsO = new ColorizeSchemeClassObject(colorSchema);
 
         List<String> colorar = cSsO.getColorArray(); //size 26
@@ -287,9 +369,9 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
                 "var preColors2 = preColors1.replace(']', '');" +
                 "var colorsArray = preColors2.split(',');" +
 
-                "var theText = '<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>';"+
+                "var theText = '<html>'+document.getElementsByTagName('html')[0].innerHTML+'</html>';" +
 
-                "window.HtmlViewer.initScript(alpha.length+alphaBig.length);"+
+                "window.HtmlViewer.initScript(alpha.length+alphaBig.length);" +
 
                 "for (i = 0; i < alpha.length; i++) " +
                 "{if(window.HtmlViewer.isActive(i))" +
@@ -303,7 +385,7 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
                 "{if(window.HtmlViewer.isActive(i+alpha.length-1))" +
                 "{var re = new RegExp( \"(\" + alphaBig[i] + \"(?![^<>]*>))\", 'g' );" +
                 "theText  = theText.replace(re, " +
-                "'<font  color=\"'+colorsArray[i]+'\">'+alphaBig[i]+'</font>');}" +
+                "'<span style =\"color:'+colorsArray[i]+'\">'+alphaBig[i]+'</span>');}" +
                 "else{break;}" +
                 "};" +
 
@@ -312,7 +394,7 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
                 "{window.HtmlViewer.showHTML" +
                 "(theText);}" +
 
-                "window.HtmlViewer.isActive(alpha.length+alphaBig.length)"+
+                "window.HtmlViewer.isActive(alpha.length+alphaBig.length)" +
                 "})()";
     }
 
