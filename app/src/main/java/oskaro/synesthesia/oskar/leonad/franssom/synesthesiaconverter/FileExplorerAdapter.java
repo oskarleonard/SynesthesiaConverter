@@ -22,11 +22,14 @@ public class FileExplorerAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private File[] files;
     private String extension;
+    private int sizeIcon;
 
     public FileExplorerAdapter(Context context, File[] files, String extension) {
         this.files = files;
         this.extension = extension;
         inflater = LayoutInflater.from(context);
+        //Rezise pixture to 250x250 and let Picaso handle memory
+        sizeIcon = 250;
     }
 
     @Override
@@ -65,10 +68,10 @@ public class FileExplorerAdapter extends BaseAdapter {
                 //If cover from assets or not
                 if(currentFile.getPath().contains("file:/")){
                     String[] thePath = currentFile.getPath().split("file:/");
-                    Picasso.with(inflater.getContext()).load("file:///"+thePath[1]).resize(250, 250).into(ivFileIcon);
+                    Picasso.with(inflater.getContext()).load("file:///"+thePath[1]).resize(sizeIcon, sizeIcon).into(ivFileIcon);
                 }else{
                     //Picasso helps here in case the jpg files is too big. Picasso takes care of memory management.
-                    Picasso.with(inflater.getContext()).load(currentFile.toURI().toString()).resize(250, 250).into(ivFileIcon);
+                    Picasso.with(inflater.getContext()).load(currentFile.toURI().toString()).resize(sizeIcon, sizeIcon).into(ivFileIcon);
                 }
 
             }else{

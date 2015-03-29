@@ -88,11 +88,11 @@ public class AppBook implements Parcelable{
 
         int j = 0;
         for(int x = 0; x < titleChar.length; x++){
-            if(j < 12){
+            if(j < 13){
                 lineBreakString += titleChar[x];
                 j++;
             }else{
-                lineBreakString += "\n  ";
+                lineBreakString += "\n ";
                 lineBreakString += titleChar[x];
                 j=0;
             }

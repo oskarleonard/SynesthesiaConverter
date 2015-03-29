@@ -42,6 +42,7 @@ public class SettingsFrameActivity extends ActionBarActivity {
         navSpinner.add("Magneta ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         navSpinner.add("Oskar ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         navSpinner.add("RainBow ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        navSpinner.add("Peter  ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         navSpinner.add("Rain  ABCDEFGHIJKLMNOPQRSTUVWXYZ");
         //navSpinner.add("This is a preview of the schema, most common among synesthetic people ");
 

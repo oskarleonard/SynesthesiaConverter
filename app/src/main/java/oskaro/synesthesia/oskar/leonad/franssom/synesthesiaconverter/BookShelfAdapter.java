@@ -1,12 +1,9 @@
 package oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter;
 
 import android.content.Context;
-import android.graphics.Point;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +22,8 @@ public class BookShelfAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private BookShelf bookShelf;
+    public static final int SIZE_BOOK_Y = 580;
+    public static final int SIZE_BOOK_X = 520;
 
     public void setBookShelf(BookShelf bookShelf) {
         if(bookShelf==null)
@@ -71,32 +70,8 @@ public class BookShelfAdapter extends BaseAdapter {
         /*If Picasso library becomes unstable just use:
         Async Treading and scale using BitmapFactory.Options o2 = new BitmapFactory.Options();
          */
-        Picasso.with(inflater.getContext()).load(theBook.getCover()).resize(getBookWidth(context), getBookHeight(context)).into(view);
+        Picasso.with(inflater.getContext()).load(theBook.getCover()).resize(SIZE_BOOK_X, SIZE_BOOK_Y).into(view);
 
         return convertView;
-    }
-
-
-    public static int getBookWidth(Context sizeContext){
-        WindowManager wm = (WindowManager) sizeContext.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width = size.x;
-        int height = size.y;
-
-        //If landscape mode divide the height else divide the width
-        if(width>height){
-            return (int)Math.round(height/2.4);
-        }else{
-            return (int)Math.round(width/2.4);
-        }
-
-    }
-
-    public static int getBookHeight(Context sizeContext){
-
-        //the height depends on the width, its always 1.17* bigger
-        return (int)Math.round(getBookWidth(sizeContext)*1.17);
     }
 }

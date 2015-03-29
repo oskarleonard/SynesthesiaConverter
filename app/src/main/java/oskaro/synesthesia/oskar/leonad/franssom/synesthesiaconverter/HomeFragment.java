@@ -42,7 +42,6 @@ public class HomeFragment extends Fragment {
         tvHomeBookTitle = (TextView)theView.findViewById(R.id.tvHomeBookTitle);
         setUpButtons();
 
-        Picasso.with(getActivity()).load("file:///android_asset/books/frame_open_white.jpg").resize(BookShelfAdapter.getBookWidth(getActivity()), BookShelfAdapter.getBookHeight(getActivity())).into(ibLastRead);
 
         return theView;
     }
@@ -55,7 +54,9 @@ public class HomeFragment extends Fragment {
 
         if(appBook != null){
             tvHomeBookTitle.setText(appBook.getTitle());
-            Picasso.with(getActivity()).load(appBook.getCover()).resize(BookShelfAdapter.getBookWidth(getActivity()), BookShelfAdapter.getBookHeight(getActivity())).into(ibLastRead);
+            Picasso.with(getActivity()).load(appBook.getCover()).resize(BookShelfAdapter.SIZE_BOOK_X, BookShelfAdapter.SIZE_BOOK_Y).into(ibLastRead);
+        }else{
+            Picasso.with(getActivity()).load("file:///android_asset/books/frame_open_white.jpg").resize(BookShelfAdapter.SIZE_BOOK_X, BookShelfAdapter.SIZE_BOOK_Y).into(ibLastRead);
         }
     }
 

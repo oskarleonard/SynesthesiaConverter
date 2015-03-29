@@ -3,6 +3,7 @@ package oskaro.synesthesia.oskar.leonad.franssom.synesthesiaconverter;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -139,6 +140,14 @@ public class HtmlAddDialog extends DialogFragment implements FileDialogFragment.
     private boolean createHtmlFile() {
         boolean toReturn = false;
         File dir = Environment.getExternalStorageDirectory();
+
+        Long kk = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        Log.i("Runtime",
+                " Total " + Runtime.getRuntime().totalMemory());
+        Log.i("Runtime",
+                " kk " + kk);
+        Log.i("Runtime",
+                " Runtime.getRuntime().maxMemory() " + Runtime.getRuntime().maxMemory());
 
         // Do this : https://developer.android.com/training/run-background-service/index.html
         //https://androidresearch.wordpress.com/2012/03/17/understanding-asynctask-once-and-forever/

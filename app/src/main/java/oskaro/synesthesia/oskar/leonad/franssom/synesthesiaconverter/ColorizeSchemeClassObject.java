@@ -71,6 +71,9 @@ public class ColorizeSchemeClassObject {
             OskarScheme();
         }else if(colorScheme == 3){
             RainBow();
+        }else if (colorScheme == 4){
+            peterSchema();
+
         }else{
             Rain();
         }
@@ -177,18 +180,57 @@ public class ColorizeSchemeClassObject {
         COLOR_9 = "#FF0033";
     }
 
+    private void peterSchema(){
+        A= "#FF00FF";
+        B= "#AACCDD";
+        C= "#FF0000";
+        D= "#00FF00";
+        E= "#0000FF";
+        F= "#EEE000";
+        G= "#339955";
+        H= "#00FFF0";
+        I= "#000FFF";
+        J= "#AABBCC";
+        K= "#DD33AA";
+        L= "#AAA0DA";
+        M= "#00A0A0";
+        N= "#5000AA";
+        O= "#008080";
+        P= "#AA0A00";
+        Q= "#55CC77";
+        R= "#563200";
+        S= "#00AAAA";
+        T= "#AA0AA0";
+        U= "#800080";
+        V= "#808080";
+        W= "#11AA99";
+        X= "#55AACC";
+        Y= "#FFAA44";
+        Z= "#0F0FAC";
+        COLOR_0= "#000000";
+        COLOR_1= "#00FF00";
+        COLOR_2= "#0000FF";
+        COLOR_3= "#FF00FF";
+        COLOR_4= "#FFCC00";
+        COLOR_5= "#EE9944";
+        COLOR_6= "#FF0000";
+        COLOR_7= "#00CCCC";
+        COLOR_8= "#005588";
+        COLOR_9= "#901467";
+    }
+
     private void OskarScheme() {
 
         A = "#7E6C09";
         B = "#0006FB";
         C = "#00b3b3";
         D = "#00bfff";
-        E = "#000074";
+        E = "#00007D";
         F = "#AFDA00";
-        G = "#7fff00";
+        G = "#00FF00";
         H = "#720B1C";
         I = "#000000";
-        J = "#FFF73B; text-shadow: #000 0.02em 0.02em 0.02em;";
+        J = "#FEFF00; font-weight:bold; text-shadow: #000 0.02em 0.03em 0.04em;";
         K = "#00FFFF";
         //   F60F88
         L = "#CB0048";
@@ -196,34 +238,32 @@ public class ColorizeSchemeClassObject {
         M = "#03AE2C";
 
         N = "#ff0000";
-        O = "#043A6C";
+        O = "#7F99A6";
         P = "#ff00ff";
-        Q = "#340034";
-        R = "#FFA100";
+        Q = "#2200BF";
+        R = "#F18F00";
         S = "#A6B7FF";
         T = "#5D3ED4";
 
-        U = "#0A2A0A";
+        U = "#186118";
         //724976
-        V = "#00FF99";
+        V = "#6AFFCB";
         W = "#9100EB";
-        X = "#000000";
+        X = "#FFDA1E";
         //077bbd
         Y = "#FFC7D8";
-        Z = "#A25000";
+        Z = "#F08187";
 
-
-        COLOR_0 = "#A4A2A0";
-        COLOR_1 = "#FFA100";
-        COLOR_2 = "#0AA300";
-        COLOR_3 = "#C80900";
-
-        COLOR_4 = "#1100FF";
-        COLOR_5 = "#D100FF";
-        COLOR_6 = "#2A8EFF";
-        COLOR_7 = "#FF45ED";
-        COLOR_8 = "#8BFF00";
-        COLOR_9 = "#00FCFF";
+        COLOR_0 = "#E8E8E8; text-shadow: #606060 0.02em 0.02em 0.07em;";
+        COLOR_1 = "#000000; text-shadow: #00ffff 0.02em 0.02em 0.07em;";
+        COLOR_2 = "#00fff0; text-shadow: #000000 0.02em 0.02em 0.07em;";
+        COLOR_3 = "#C80900; text-shadow: #11AA99 0.02em 0.02em 0.07em;";
+        COLOR_4 = "#1100FF; text-shadow: #000000 0.02em 0.02em 0.07em;";
+        COLOR_5 = "#D100FF; text-shadow: #000000 0.02em 0.02em 0.07em;";
+        COLOR_6 = "#2A8EFF; text-shadow: #000000 0.02em 0.02em 0.07em;";
+        COLOR_7 = "#FF45ED; text-shadow: #ff00ff 0.02em 0.02em 0.07em;";
+        COLOR_8 = "#989898; text-shadow: #ff00ff 0.02em 0.02em 0.07em;";
+        COLOR_9 = "#00b0b3; text-shadow: #0083DA 0.02em 0.02em 0.07em;";
     }
 
     private void RainBow() {

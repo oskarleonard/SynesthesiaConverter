@@ -63,7 +63,6 @@ public class HtmlFragment extends Fragment implements HtmlAddDialog.ConverterDia
         //First lib
         final BookShelf shelf = BookShelf.getShelf(getActivity(), SHARED_PREF_KEY_INAPP_SHELF1);
 
-
         twvInAppLibOne.setAdapter(new BookShelfAdapter(theView.getContext(), shelf));
 
 
